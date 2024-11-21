@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://pg-106838b9-vku-6751.h.aivencloud.com:25058/defaultdb?sslmode=require
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ai4l-database
+    hibernate:
+      ddl-auto: update
+
+  # Swagger UI Configuration
+  springdoc:
+    swagger-ui:
+      path: /swagger-ui.html
