@@ -13,7 +13,7 @@ spring:
         format_sql: true
         default_schema: ai4l-database
     hibernate:
-      ddl-auto: update
+#      ddl-auto: update
 
   # Swagger UI Configuration
   springdoc:

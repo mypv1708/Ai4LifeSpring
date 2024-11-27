@@ -34,6 +34,9 @@ public class CallHistory {
     @Column(name = "file_name")
     private String fileName;
 
+    @Column(name = "duration")
+    private String duration;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;

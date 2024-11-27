@@ -1,10 +1,16 @@
 package com.spring.ai4life.service.impl;
 
+import com.google.gson.Gson;
 import com.spring.ai4life.common.BaseResponse;
 import com.spring.ai4life.constants.MessageUnit;
 import com.spring.ai4life.dto.response.ContactCustomerResponse;
+import com.spring.ai4life.dto.response.ReviewCallDetailResponse;
 import com.spring.ai4life.entity.CallHistory;
+import com.spring.ai4life.entity.ReviewSpeech;
+import com.spring.ai4life.entity.ReviewSpeechDetail;
+import com.spring.ai4life.entity.SegmentAnalysist;
 import com.spring.ai4life.repository.CallHistoryRepository;
+import com.spring.ai4life.repository.ReviewCallRepository;
 import com.spring.ai4life.service.AdminService;
 import com.spring.ai4life.service.CustomerService;
 import org.slf4j.Logger;
@@ -18,9 +24,11 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
     private static final Logger log = LoggerFactory.getLogger(CustomerService.class);
     private final CallHistoryRepository callHistoryRepository;
+    private final ReviewCallRepository reviewCallRepository;
 
-    public AdminServiceImpl(CallHistoryRepository callHistoryRepository) {
+    public AdminServiceImpl(CallHistoryRepository callHistoryRepository, ReviewCallRepository reviewCallRepository) {
         this.callHistoryRepository = callHistoryRepository;
+        this.reviewCallRepository = reviewCallRepository;
     }
 
     @Override
@@ -50,7 +58,39 @@ public class AdminServiceImpl implements AdminService {
         } catch (Exception e) {
             log.error("[ERROR] [AdminServiceImp] [getContactCustomer]: " + e.getMessage());
             return new BaseResponse<>().error(MessageUnit.INTERNAL_ERROR_SERVER, MessageUnit.MESSAGE_VI_INTERNAL_ERROR_SERVER, MessageUnit.MESSAGE_EN_INTERNAL_ERROR_SERVER, null);
+        }
+    }
 
+    @Override
+    public BaseResponse<?> reviewCallHistory() {
+        try {
+            List<ReviewCallDetailResponse> callHistoryList = callHistoryRepository.getInfoReviewCallDetail();
+            if (!callHistoryList.isEmpty()) {
+                Gson gson = new Gson();
+                for (ReviewCallDetailResponse callDetail : callHistoryList) {
+                    String reviewSpeechJson = callDetail.getReviewSpeech();
+                    String segmentAnalysisJson = callDetail.getSegmentAnalysis();
+                    String reviewSpeechDetailJson = callDetail.getReviewSpeechDetail();
+
+                    ReviewSpeech reviewSpeech = gson.fromJson(reviewSpeechJson, ReviewSpeech.class);
+                    SegmentAnalysist segmentAnalysis = gson.fromJson(segmentAnalysisJson, SegmentAnalysist.class);
+                    ReviewSpeechDetail reviewSpeechDetail = gson.fromJson(reviewSpeechDetailJson, ReviewSpeechDetail.class);
+
+                    callDetail.setReviewSpeechObject(reviewSpeech);
+                    callDetail.setSegmentAnalysisObject(segmentAnalysis);
+                    callDetail.setReviewSpeechDetailObject(reviewSpeechDetail);
+
+                }
+
+                log.info("[INFO] [AdminServiceImp] [reviewCallHistory] : Lấy danh sách thành công!!");
+                return new BaseResponse<>().success(callHistoryList);
+            } else {
+                log.error("[ERROR] [AdminServiceImp] [reviewCallHistory]: " + MessageUnit.MESSAGE_VI_NO_DATA);
+                return new BaseResponse<>().error(MessageUnit.NO_DATA, MessageUnit.MESSAGE_VI_NO_DATA, MessageUnit.MESSAGE_EN_NO_DATA, null);
+            }
+        } catch (Exception e) {
+            log.error("[ERROR] [AdminServiceImp] [reviewCallHistory]: " + e.getMessage());
+            return new BaseResponse<>().error(MessageUnit.INTERNAL_ERROR_SERVER, MessageUnit.MESSAGE_VI_INTERNAL_ERROR_SERVER, MessageUnit.MESSAGE_EN_INTERNAL_ERROR_SERVER, null);
         }
     }
 }

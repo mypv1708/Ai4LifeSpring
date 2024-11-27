@@ -20,4 +20,9 @@ public class AdminController {
     public ResponseEntity<BaseResponse<?>> getContactCustomer() {
         return ResponseEntity.ok(adminService.getContactCustomer());
     }
+
+    @RequestMapping(value = "/review-call-detail", method = RequestMethod.GET)
+    public ResponseEntity<BaseResponse<?>> reviewCallHistory() {
+        return ResponseEntity.ok(adminService.reviewCallHistory());
+    }
 }

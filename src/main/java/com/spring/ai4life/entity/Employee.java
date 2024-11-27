@@ -18,7 +18,7 @@ public class Employee {
     @Column(name = "employee_id")
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID customerId;
+    private UUID employeeId;
 
     @Column(name = "full_name")
     private String fullName;
