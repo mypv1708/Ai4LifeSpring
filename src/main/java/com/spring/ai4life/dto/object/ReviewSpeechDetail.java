@@ -12,6 +12,8 @@ public class ReviewSpeechDetail {
         private String file;
         private String emotion;
         private double duration;
+        private double probabilityPositive;
+        private double probabilityNegative;
 
         public PredictionDetail(){
         }
@@ -41,6 +43,24 @@ public class ReviewSpeechDetail {
 
         public void setDuration (double duration){
             this.duration = duration;
+        }
+
+        @JsonProperty("probabilityPositive")
+        public double getProbabilityPositive () {
+            return probabilityPositive;
+        }
+
+        public void setProbabilityPositive (double probabilityPositive){
+            this.probabilityPositive = probabilityPositive;
+        }
+
+        @JsonProperty("probabilityNegative")
+        public double getProbabilityNegative () {
+            return probabilityNegative;
+        }
+
+        public void setProbabilityNegative (double probabilityNegative){
+            this.probabilityNegative = probabilityNegative;
         }
     }
 }
