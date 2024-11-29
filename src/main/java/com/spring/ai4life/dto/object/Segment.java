@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Segment {
     private String text;
     private String sentiment;
-    private double accuracy;
+    private double percentNormal;
+    private double percentPositive;
+    private double percentNegative;
 
     @JsonProperty("text")
     public String getText() {
@@ -25,12 +27,30 @@ public class Segment {
         this.sentiment = sentiment;
     }
 
-    @JsonProperty("accuracy")
-    public double getAccuracy() {
-        return accuracy;
+    @JsonProperty("percentPositive")
+    public double getPercentPositive() {
+        return percentPositive;
     }
 
-    public void setAccuracy(double accuracy) {
-        this.accuracy = accuracy;
+    public void setPercentPositive(double percentPositive) {
+        this.percentPositive = percentPositive;
+    }
+
+    @JsonProperty("percentNormal")
+    public double getPercentNormal() {
+        return percentNormal;
+    }
+
+    public void setPercentNormal(double percentNormal) {
+        this.percentNormal = percentNormal;
+    }
+
+    @JsonProperty("percentNegative")
+    public double getPercentNegative() {
+        return percentNegative;
+    }
+
+    public void setPercentNegative(double percentNegative) {
+        this.percentNegative = percentNegative;
     }
 }
