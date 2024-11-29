@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -84,6 +85,36 @@ public class AdminServiceImpl implements AdminService {
 
                 log.info("[INFO] [AdminServiceImp] [reviewCallHistory] : Lấy danh sách thành công!!");
                 return new BaseResponse<>().success(callHistoryList);
+            } else {
+                log.error("[ERROR] [AdminServiceImp] [reviewCallHistory]: " + MessageUnit.MESSAGE_VI_NO_DATA);
+                return new BaseResponse<>().error(MessageUnit.NO_DATA, MessageUnit.MESSAGE_VI_NO_DATA, MessageUnit.MESSAGE_EN_NO_DATA, null);
+            }
+        } catch (Exception e) {
+            log.error("[ERROR] [AdminServiceImp] [reviewCallHistory]: " + e.getMessage());
+            return new BaseResponse<>().error(MessageUnit.INTERNAL_ERROR_SERVER, MessageUnit.MESSAGE_VI_INTERNAL_ERROR_SERVER, MessageUnit.MESSAGE_EN_INTERNAL_ERROR_SERVER, null);
+        }
+    }
+
+    @Override
+    public BaseResponse<?> reviewCallDetailById(UUID callHistoryId) {
+        try {
+            ReviewCallDetailResponse reviewCallDetailResponse = callHistoryRepository.getInfoReviewCallDetailById(callHistoryId);
+            if (reviewCallDetailResponse != null) {
+                Gson gson = new Gson();
+                String reviewSpeechJson = reviewCallDetailResponse.getReviewSpeech();
+                String segmentAnalysisJson = reviewCallDetailResponse.getSegmentAnalysis();
+                String reviewSpeechDetailJson = reviewCallDetailResponse.getReviewSpeechDetail();
+
+                ReviewSpeech reviewSpeech = gson.fromJson(reviewSpeechJson, ReviewSpeech.class);
+                SegmentAnalysist segmentAnalysis = gson.fromJson(segmentAnalysisJson, SegmentAnalysist.class);
+                ReviewSpeechDetail reviewSpeechDetail = gson.fromJson(reviewSpeechDetailJson, ReviewSpeechDetail.class);
+
+                reviewCallDetailResponse.setReviewSpeechObject(reviewSpeech);
+                reviewCallDetailResponse.setSegmentAnalysisObject(segmentAnalysis);
+                reviewCallDetailResponse.setReviewSpeechDetailObject(reviewSpeechDetail);
+
+                log.info("[INFO] [AdminServiceImp] [reviewCallHistory] : Lấy danh sách thành công!!");
+                return new BaseResponse<>().success(reviewCallDetailResponse);
             } else {
                 log.error("[ERROR] [AdminServiceImp] [reviewCallHistory]: " + MessageUnit.MESSAGE_VI_NO_DATA);
                 return new BaseResponse<>().error(MessageUnit.NO_DATA, MessageUnit.MESSAGE_VI_NO_DATA, MessageUnit.MESSAGE_EN_NO_DATA, null);

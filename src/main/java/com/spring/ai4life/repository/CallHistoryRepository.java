@@ -21,4 +21,12 @@ public interface CallHistoryRepository extends JpaRepository<CallHistory, UUID> 
             "JOIN CallHistory c ON r.callHistory.callHistoryId = c.callHistoryId " +
             "JOIN Employee e ON c.employee.employeeId = e.employeeId")
     List<ReviewCallDetailResponse> getInfoReviewCallDetail();
+
+    @Query("SELECT new com.spring.ai4life.dto.response.ReviewCallDetailResponse(" +
+            "c.callHistoryId, e.fullName, c.createdAt, c.typeTask, c.fileName, " +
+            "c.duration, r.reviewSpeech, r.segmentAnalysis, r.reviewSpeechDetail, r.segmentAnalysisDetail) " +
+            "FROM ReviewCall r " +
+            "JOIN CallHistory c ON r.callHistory.callHistoryId = c.callHistoryId " +
+            "JOIN Employee e ON c.employee.employeeId = e.employeeId where c.callHistoryId =:callHistoryId")
+    ReviewCallDetailResponse getInfoReviewCallDetailById(UUID callHistoryId);
 }

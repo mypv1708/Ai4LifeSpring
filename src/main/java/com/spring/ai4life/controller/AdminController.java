@@ -4,10 +4,9 @@ import com.spring.ai4life.common.BaseResponse;
 import com.spring.ai4life.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5500")
@@ -24,5 +23,10 @@ public class AdminController {
     @RequestMapping(value = "/review-call-detail", method = RequestMethod.GET)
     public ResponseEntity<BaseResponse<?>> reviewCallHistory() {
         return ResponseEntity.ok(adminService.reviewCallHistory());
+    }
+
+    @RequestMapping(value = "/review-call-detail-by-id", method = RequestMethod.GET)
+    public ResponseEntity<BaseResponse<?>> reviewCallDetailById(@RequestParam UUID callHistoryId) {
+        return ResponseEntity.ok(adminService.reviewCallDetailById(callHistoryId));
     }
 }
