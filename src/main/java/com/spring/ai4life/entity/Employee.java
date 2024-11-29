@@ -34,4 +34,7 @@ public class Employee {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "position")
+    private String position;
 }
