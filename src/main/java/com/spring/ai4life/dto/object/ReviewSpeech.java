@@ -1,4 +1,4 @@
-package com.spring.ai4life.entity;
+package com.spring.ai4life.dto.object;
 
 import lombok.Getter;
 import lombok.Setter;

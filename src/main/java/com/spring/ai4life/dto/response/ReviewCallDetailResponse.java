@@ -1,8 +1,6 @@
 package com.spring.ai4life.dto.response;
 
-import com.spring.ai4life.entity.ReviewSpeech;
-import com.spring.ai4life.entity.ReviewSpeechDetail;
-import com.spring.ai4life.entity.SegmentAnalysist;
+import com.spring.ai4life.dto.object.*;
 import com.spring.ai4life.enums.TaskEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,11 +24,15 @@ public class ReviewCallDetailResponse {
     private String reviewSpeechDetail;
     private String segmentAnalysisDetail;
 
+    private String overviewPercentage;
+
     private ReviewSpeech reviewSpeechObject;
+    private ReviewPercentageSpeech reviewPercentageSpeechObject;
     private SegmentAnalysist segmentAnalysisObject;
     private ReviewSpeechDetail reviewSpeechDetailObject;
+    private SegmentAnalysisDetail segmentAnalysisDetailObject;
 
-    public ReviewCallDetailResponse(UUID callHistoryId, String fullNameEmployee, Timestamp calledTime, TaskEnum typeTask, String fileName, String durationFile, String reviewSpeech, String segmentAnalysis, String reviewSpeechDetail, String segmentAnalysisDetail) {
+    public ReviewCallDetailResponse(UUID callHistoryId, String fullNameEmployee, Timestamp calledTime, TaskEnum typeTask, String fileName, String durationFile, String reviewSpeech, String segmentAnalysis, String reviewSpeechDetail, String segmentAnalysisDetail, String overviewPercentage) {
         this.callHistoryId = callHistoryId;
         this.fullNameEmployee = fullNameEmployee;
         this.calledTime = calledTime;
@@ -41,5 +43,6 @@ public class ReviewCallDetailResponse {
         this.segmentAnalysis = segmentAnalysis;
         this.reviewSpeechDetail = reviewSpeechDetail;
         this.segmentAnalysisDetail = segmentAnalysisDetail;
+        this.overviewPercentage = overviewPercentage;
     }
 }

@@ -3,12 +3,10 @@ package com.spring.ai4life.service.impl;
 import com.google.gson.Gson;
 import com.spring.ai4life.common.BaseResponse;
 import com.spring.ai4life.constants.MessageUnit;
+import com.spring.ai4life.dto.object.*;
 import com.spring.ai4life.dto.response.ContactCustomerResponse;
 import com.spring.ai4life.dto.response.ReviewCallDetailResponse;
 import com.spring.ai4life.entity.CallHistory;
-import com.spring.ai4life.entity.ReviewSpeech;
-import com.spring.ai4life.entity.ReviewSpeechDetail;
-import com.spring.ai4life.entity.SegmentAnalysist;
 import com.spring.ai4life.repository.CallHistoryRepository;
 import com.spring.ai4life.repository.ReviewCallRepository;
 import com.spring.ai4life.service.AdminService;
@@ -72,14 +70,21 @@ public class AdminServiceImpl implements AdminService {
                     String reviewSpeechJson = callDetail.getReviewSpeech();
                     String segmentAnalysisJson = callDetail.getSegmentAnalysis();
                     String reviewSpeechDetailJson = callDetail.getReviewSpeechDetail();
+                    String reviewPercentageSpeechJson = callDetail.getOverviewPercentage();
+                    String segmentAnalysisDetailJson = callDetail.getSegmentAnalysisDetail();
 
                     ReviewSpeech reviewSpeech = gson.fromJson(reviewSpeechJson, ReviewSpeech.class);
+                    ReviewPercentageSpeech reviewPercentageSpeech = gson.fromJson(reviewPercentageSpeechJson, ReviewPercentageSpeech.class);
                     SegmentAnalysist segmentAnalysis = gson.fromJson(segmentAnalysisJson, SegmentAnalysist.class);
                     ReviewSpeechDetail reviewSpeechDetail = gson.fromJson(reviewSpeechDetailJson, ReviewSpeechDetail.class);
+                    SegmentAnalysisDetail segmentAnalysisDetail = gson.fromJson(segmentAnalysisDetailJson, SegmentAnalysisDetail.class);
+
 
                     callDetail.setReviewSpeechObject(reviewSpeech);
+                    callDetail.setReviewPercentageSpeechObject(reviewPercentageSpeech);
                     callDetail.setSegmentAnalysisObject(segmentAnalysis);
                     callDetail.setReviewSpeechDetailObject(reviewSpeechDetail);
+                    callDetail.setSegmentAnalysisDetailObject(segmentAnalysisDetail);
 
                 }
 
@@ -104,14 +109,21 @@ public class AdminServiceImpl implements AdminService {
                 String reviewSpeechJson = reviewCallDetailResponse.getReviewSpeech();
                 String segmentAnalysisJson = reviewCallDetailResponse.getSegmentAnalysis();
                 String reviewSpeechDetailJson = reviewCallDetailResponse.getReviewSpeechDetail();
+                String reviewPercentageSpeechJson = reviewCallDetailResponse.getOverviewPercentage();
+                String segmentAnalysisDetailJson = reviewCallDetailResponse.getSegmentAnalysisDetail();
 
                 ReviewSpeech reviewSpeech = gson.fromJson(reviewSpeechJson, ReviewSpeech.class);
+                ReviewPercentageSpeech reviewPercentageSpeech = gson.fromJson(reviewPercentageSpeechJson, ReviewPercentageSpeech.class);
                 SegmentAnalysist segmentAnalysis = gson.fromJson(segmentAnalysisJson, SegmentAnalysist.class);
                 ReviewSpeechDetail reviewSpeechDetail = gson.fromJson(reviewSpeechDetailJson, ReviewSpeechDetail.class);
+                SegmentAnalysisDetail segmentAnalysisDetail = gson.fromJson(segmentAnalysisDetailJson, SegmentAnalysisDetail.class);
+
 
                 reviewCallDetailResponse.setReviewSpeechObject(reviewSpeech);
+                reviewCallDetailResponse.setReviewPercentageSpeechObject(reviewPercentageSpeech);
                 reviewCallDetailResponse.setSegmentAnalysisObject(segmentAnalysis);
                 reviewCallDetailResponse.setReviewSpeechDetailObject(reviewSpeechDetail);
+                reviewCallDetailResponse.setSegmentAnalysisDetailObject(segmentAnalysisDetail);
 
                 log.info("[INFO] [AdminServiceImp] [reviewCallHistory] : Lấy danh sách thành công!!");
                 return new BaseResponse<>().success(reviewCallDetailResponse);

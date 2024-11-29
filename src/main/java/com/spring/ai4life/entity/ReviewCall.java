@@ -35,4 +35,7 @@ public class ReviewCall {
 
     @Column(name = "segment_analysis_detail")
     private String segmentAnalysisDetail;
+
+    @Column(name = "overview_percentage")
+    private String overviewPercentage;
 }

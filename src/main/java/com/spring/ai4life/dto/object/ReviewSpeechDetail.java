@@ -1,4 +1,4 @@
-package com.spring.ai4life.entity;
+package com.spring.ai4life.dto.object;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
